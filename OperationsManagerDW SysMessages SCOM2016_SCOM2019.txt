@@ -1,0 +1,125 @@
+/*********************************************************
+*
+*  Management Group connect / disconnect / permission errors
+*
+*********************************************************/
+
+-- Login specified in the MGPrepareConnect() is already specified as writer login for another management group and that is not confirmed yet
+DECLARE @localized_string_msgnum_777970001 nvarchar(255)
+set @localized_string_msgnum_777970001 = N'Login specified as Management Group Writer Login is already specified as writer login for another pending Management Group connect operation. Choose different login or confirm/reject previous connect operation'
+EXECUTE sp_addmessage @msgnum = 777970001, @msgtext = @localized_string_msgnum_777970001, @severity = 16, @lang = 'us_english', @with_log = false, @replace = 'REPLACE'
+
+-- MG is already connected
+DECLARE @localized_string_msgnum_777970002 nvarchar(255)
+set @localized_string_msgnum_777970002 = N'Management Group is already connected to this Data Warehouse'
+EXECUTE sp_addmessage @msgnum = 777970002, @msgtext = @localized_string_msgnum_777970002, @severity = 16, @lang = 'us_english', @with_log = false, @replace = 'REPLACE'
+
+-- MG is not an owner
+DECLARE @localized_string_msgnum_777970004 nvarchar(255)
+set @localized_string_msgnum_777970004 = N'Operation may be performed only by Data Warehouse owning Management Group. This management group is not owner and may not perform requested operation'
+EXECUTE sp_addmessage @msgnum = 777970004, @msgtext = @localized_string_msgnum_777970004, @severity = 16, @lang = 'us_english', @with_log = false, @replace = 'REPLACE'
+
+-- MG is not part of the DW
+DECLARE @localized_string_msgnum_777970005 nvarchar(255)
+set @localized_string_msgnum_777970005 = N'Management group with id ''''%s'''' is not a member of this Data Warehouse or you do not have permissions to perform actions for that management group'
+EXECUTE sp_addmessage @msgnum = 777970005, @msgtext = @localized_string_msgnum_777970005, @severity = 16, @lang = 'us_english', @with_log = false, @replace = 'REPLACE'
+
+-- Cannot reject owner MG if it is not the last
+DECLARE @localized_string_msgnum_777970006 nvarchar(255)
+set @localized_string_msgnum_777970006 = N'Cannot delete owning Management Group from the Data Warehouse while other member management groups exist. Delete member management groups first'
+EXECUTE sp_addmessage @msgnum = 777970006, @msgtext = @localized_string_msgnum_777970006, @severity = 16, @lang = 'us_english', @with_log = false, @replace = 'REPLACE'
+
+-- MG is not member at all
+DECLARE @localized_string_msgnum_777970007 nvarchar(255)
+set @localized_string_msgnum_777970007 = N'Management Group with id ''''%s'''' is not a member management group of this Data Warehouse'
+EXECUTE sp_addmessage @msgnum = 777970007, @msgtext = @localized_string_msgnum_777970007, @severity = 16, @lang = 'us_english', @with_log = false, @replace = 'REPLACE'
+
+-- MG is not allowed to perform actions under this login
+DECLARE @localized_string_msgnum_777970008 nvarchar(255)
+set @localized_string_msgnum_777970008 = N'Management Group with id ''''%s'''' is not allowed to access Data Warehouse under login ''''%s'''''
+EXECUTE sp_addmessage @msgnum = 777970008, @msgtext = @localized_string_msgnum_777970008, @severity = 16, @lang = 'us_english', @with_log = false, @replace = 'REPLACE'
+
+/*********************************************************
+*
+*  Generic data processing error
+*
+*********************************************************/
+
+-- Xml parsing failed
+DECLARE @localized_string_msgnum_777971000 nvarchar(255)
+set @localized_string_msgnum_777971000 = N'Failed to load and parse ''''%s'''' xml. sp_xml_preparedocument returned ''''%d'''''
+EXECUTE sp_addmessage @msgnum = 777971000, @msgtext = @localized_string_msgnum_777971000, @severity = 16, @lang = 'us_english', @with_log = false, @replace = 'REPLACE'
+
+-- Lock set failed
+DECLARE @localized_string_msgnum_777971001 nvarchar(255)
+set @localized_string_msgnum_777971001 = N'Failed to set application lock on ''''%s''''. sp_getapplock returned ''''%d'''''
+EXECUTE sp_addmessage @msgnum = 777971001, @msgtext = @localized_string_msgnum_777971001, @severity = 16, @lang = 'us_english', @with_log = false, @replace = 'REPLACE'
+
+-- Try/catch block wrapping error
+DECLARE @localized_string_msgnum_777971002 nvarchar(255)
+set @localized_string_msgnum_777971002 = N'Sql execution failed. Error %d, Level %d, State %d, Procedure %s, Line %d, Message: %s'
+EXECUTE sp_addmessage @msgnum = 777971002, @msgtext = @localized_string_msgnum_777971002, @severity = 16, @lang = 'us_english', @with_log = false, @replace = 'REPLACE'
+
+-- Staging rename failed
+DECLARE @localized_string_msgnum_777971003 nvarchar(255)
+set @localized_string_msgnum_777971003 = N'Failed to rename staging table as part of dataset maintenance. sp_rename returned ''''%d'''''
+EXECUTE sp_addmessage @msgnum = 777971003, @msgtext = @localized_string_msgnum_777971003, @severity = 16, @lang = 'us_english', @with_log = false, @replace = 'REPLACE'
+
+/*********************************************************
+*
+*  Custom index creation errors
+*
+*********************************************************/
+
+-- target table cannot be located
+DECLARE @localized_string_msgnum_777971050 nvarchar(255)
+set @localized_string_msgnum_777971050 = N'Cannot locate target table for indexing. Dataset id ''''%s'''', aggregation type id ''''%d'''', dependent table indicator ''''%d'''', table tag ''''%s'''''
+EXECUTE sp_addmessage @msgnum = 777971050, @msgtext = @localized_string_msgnum_777971050, @severity = 16, @lang = 'us_english', @with_log = false, @replace = 'REPLACE'
+
+-- index already exists
+DECLARE @localized_string_msgnum_777971051 nvarchar(255)
+set @localized_string_msgnum_777971051 = N'Index with unique id ''''%s'''' already exists on target table. Dataset id ''''%s'''', aggregation type id ''''%d'''', dependent table indicator ''''%d'''', table tag ''''%s'''''
+EXECUTE sp_addmessage @msgnum = 777971051, @msgtext = @localized_string_msgnum_777971051, @severity = 16, @lang = 'us_english', @with_log = false, @replace = 'REPLACE'
+
+/*********************************************************
+*
+*  DW component deployment problems
+*
+*********************************************************/
+
+-- MP version does not exist
+DECLARE @localized_string_msgnum_777971101 nvarchar(255)
+set @localized_string_msgnum_777971101 = N'Deployment operation validation failed. Management pack version does not exist. Operation: ''''%s''''; Component type: ''''%s''''; Component id: ''''%s''''; Management pack version: ''''%s''''; Target: ''''%s'''''
+EXECUTE sp_addmessage @msgnum = 777971101, @msgtext = @localized_string_msgnum_777971101, @severity = 16, @lang = 'us_english', @with_log = false, @replace = 'REPLACE'
+
+-- Target db not found
+DECLARE @localized_string_msgnum_777971102 nvarchar(255)
+set @localized_string_msgnum_777971102 = N'Deployment operation validation failed. Target database or dataset does not exist. Operation: ''''%s''''; Component type: ''''%s''''; Component id: ''''%s''''; Management pack version: ''''%s''''; Target: ''''%s'''''
+EXECUTE sp_addmessage @msgnum = 777971102, @msgtext = @localized_string_msgnum_777971102, @severity = 16, @lang = 'us_english', @with_log = false, @replace = 'REPLACE'
+
+-- Component not found
+DECLARE @localized_string_msgnum_777971103 nvarchar(255)
+set @localized_string_msgnum_777971103 = N'Deployment operation validation failed. Component does not exist. Operation: ''''%s''''; Component type: ''''%s''''; Component id: ''''%s''''; Management pack version: ''''%s''''; Target: ''''%s'''''
+EXECUTE sp_addmessage @msgnum = 777971103, @msgtext = @localized_string_msgnum_777971103, @severity = 16, @lang = 'us_english', @with_log = false, @replace = 'REPLACE'
+
+-- Component already installed
+DECLARE @localized_string_msgnum_777971104 nvarchar(255)
+set @localized_string_msgnum_777971104 = N'Deployment operation validation failed. Component alrady installed. Operation: ''''%s''''; Component type: ''''%s''''; Component id: ''''%s''''; Management pack version: ''''%s''''; Target: ''''%s'''''
+EXECUTE sp_addmessage @msgnum = 777971104, @msgtext = @localized_string_msgnum_777971104, @severity = 16, @lang = 'us_english', @with_log = false, @replace = 'REPLACE'
+
+-- Component does not support upgrade
+DECLARE @localized_string_msgnum_777971105 nvarchar(255)
+set @localized_string_msgnum_777971105 = N'Deployment operation validation failed. Component does not support upgrade from previous version. Operation: ''''%s''''; Component type: ''''%s''''; Component id: ''''%s''''; Management pack version: ''''%s''''; Target: ''''%s'''''
+EXECUTE sp_addmessage @msgnum = 777971105, @msgtext = @localized_string_msgnum_777971105, @severity = 16, @lang = 'us_english', @with_log = false, @replace = 'REPLACE'
+
+-- Script target dataset does not match or does not exist
+DECLARE @localized_string_msgnum_777971106 nvarchar(255)
+set @localized_string_msgnum_777971106 = N'Deployment operation validation failed. Dataset script target dataset type does not match the target specified. Operation: ''''%s''''; Component type: ''''%s''''; Component id: ''''%s''''; Management pack version: ''''%s''''; Target: ''''%s'''''
+EXECUTE sp_addmessage @msgnum = 777971106, @msgtext = @localized_string_msgnum_777971106, @severity = 16, @lang = 'us_english', @with_log = false, @replace = 'REPLACE'
+
+-- Config provided but not required
+DECLARE @localized_string_msgnum_777971107 nvarchar(255)
+set @localized_string_msgnum_777971107 = N'Deployment operation validation failed. Configuration xml provided for operation that does not require configuration. Operation: ''''%s''''; Component type: ''''%s''''; Component id: ''''%s''''; Management pack version: ''''%s''''; Target: ''''%s'''''
+EXECUTE sp_addmessage @msgnum = 777971107, @msgtext = @localized_string_msgnum_777971107, @severity = 16, @lang = 'us_english', @with_log = false, @replace = 'REPLACE'
+
+GO
